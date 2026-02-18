@@ -41,9 +41,9 @@ window.onload = function() {
         title: '七年级下册道德与法治知识点查询', // 自定义标题，替换原来的Coze Bot
         uploadable: false, // 关键：禁用文件上传，适配教学场景
         width: 460, // 调整宽度，显示更完整
-        isNeedAudio: false, // 禁用语音输入，避免课堂干扰
+        isNeedAudio: true, // 使用语音输入，避免课堂干扰
         isNeedFunctionCallMessage: false, // 隐藏插件调用信息
-        isNeedAddNewConversation: false, // 禁用新建会话
+        isNeedAddNewConversation: true, // 禁用新建会话
         isNeedQuote: true, // 保留追问功能
       },
     },
@@ -52,6 +52,7 @@ window.onload = function() {
   // 核心中的核心：主动显示聊天框，没有这行永远看不到！
   cozeClient.showChatBot();
 };
+
 
 
 
