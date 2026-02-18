@@ -9,8 +9,8 @@ window.onload = function() {
     },
     auth: {
       type: 'token',
-      token: 'pat_Id4r9oapPe5yuESToUWaY0jSHCcK6GDCXx9fkc5e42ijTAI5eWM8IcRlbwVL47ra', // 你的PAT令牌
-      onRefreshToken: async () => 'pat_Id4r9oapPe5yuESToUWaY0jSHCcK6GDCXx9fkc5e42ijTAI5eWM8IcRlbwVL47ra' // 和token一致
+      token: 'pat_H4IeIYsBTKaxACK2mei1cGO3NGBwuqVGJdMixi1Wj2M5KXg3ZrLTSlh3HY0aNFw8', // 你的PAT令牌
+      onRefreshToken: async () => 'pat_H4IeIYsBTKaxACK2mei1cGO3NGBwuqVGJdMixi1Wj2M5KXg3ZrLTSlh3HY0aNFw8' // 和token一致
     },
     userInfo: {
       id: 'user', // 保留不变，也可改成grade7_student
@@ -52,4 +52,5 @@ window.onload = function() {
   // 核心中的核心：主动显示聊天框，没有这行永远看不到！
   cozeClient.showChatBot();
 };
+
 
