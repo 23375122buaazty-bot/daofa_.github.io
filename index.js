@@ -22,8 +22,8 @@ new CozeWebSDK.WebChatClient({
   */
   auth: {
     type: 'token',
-    token: 'cztei_qmRbvPX9tlcFm0FffQgMd8R7rJ7bRMqN3oyNxm8ulTpUva4L1vtb3fMVA3YtOFzkH',
-    onRefreshToken: async () => 'token'
+    token: 'pat_sQMe9pCSGhvzrvZnDYUxHw0gSBnCyzddjbk6lvmirNrW5Et7O6hR9CEdUW7Wti0t',
+    onRefreshToken: async () => 'pat_sQMe9pCSGhvzrvZnDYUxHw0gSBnCyzddjbk6lvmirNrW5Et7O6hR9CEdUW7Wti0t'
   },
   /**
   * The userInfo parameter is used to set the display of agent user information in the chat box.
@@ -90,4 +90,5 @@ new CozeWebSDK.WebChatClient({
   },
 
 });
+
 
