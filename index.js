@@ -1,94 +1,54 @@
-new CozeWebSDK.WebChatClient({
-  /**
-  * Agent or app settings
-  * for agent
-  * @param config.bot_id - Agent ID.
-  * for app
-  * @param config.type - To integrate a Coze app, you must set the value to app.
-  * @param config.isIframe - Whether to use the iframe method to open the chat box
-  * @param config.appInfo.appId - AI app ID.
-  * @param config.appInfo.workflowId - Workflow or chatflow ID.
-  */
-  config: {
-    type: 'bot',
-    bot_id: '7608067831829299242',
-    isIframe: false,
-  },
-  /**
-  * The auth property is used to configure the authentication method.
-  * @param type - Authentication method, default type is 'unauth', which means no authentication is required; it is recommended to set it to 'token', which means authentication is done through PAT (Personal Access Token) or OAuth.
-  * @param token - When the type is set to 'token', you need to configure the PAT (Personal Access Token) or OAuth access key.
-  * @param onRefreshToken - When the access key expires, a new key can be set as needed.
-  */
-  auth: {
-    type: 'token',
-    token: 'pat_sQMe9pCSGhvzrvZnDYUxHw0gSBnCyzddjbk6lvmirNrW5Et7O6hR9CEdUW7Wti0t',
-    onRefreshToken: async () => 'pat_sQMe9pCSGhvzrvZnDYUxHw0gSBnCyzddjbk6lvmirNrW5Et7O6hR9CEdUW7Wti0t'
-  },
-  /**
-  * The userInfo parameter is used to set the display of agent user information in the chat box.
-  * @param userInfo.id - ID of the agent user.
-  * @param userInfo.url - URL address of the user's avatar.
-  * @param userInfo.nickname - Nickname of the agent user.
-  */
-  userInfo: {
-    id: 'user',
-    url: 'https://lf-coze-web-cdn.coze.cn/obj/eden-cn/lm-lgvj/ljhwZthlaukjlkulzlp/coze/coze-logo.png',
-    nickname: 'User',
-  },
-  ui: {
-    /**
-    * The ui.base parameter is used to add the overall UI effect of the chat window.
-    * @param base.icon - Application icon URL.
-    * @param base.layout - Layout style of the agent chat box window, which can be set as 'pc' or'mobile'.
-    * @param base.lang - System language of the agent, which can be set as 'en' or 'zh-CN'.
-    * @param base.zIndex - The z-index of the chat box.
-    */
-    base: {
-      icon: 'https://lf-coze-web-cdn.coze.cn/obj/eden-cn/lm-lgvj/ljhwZthlaukjlkulzlp/coze/chatsdk-logo.png',
-      layout: 'pc',
-      lang: 'en',
-      zIndex: 1000
+// 等待页面完全加载后再初始化，避免SDK加载不完整
+window.onload = function() {
+  // 初始化SDK并赋值给变量，方便后续调用showChatBot
+  const cozeClient = new CozeWebSDK.WebChatClient({
+    config: {
+      type: 'bot',
+      bot_id: '7608067831829299242', // 你的智能体ID，保留不变
+      isIframe: false,
     },
-    /**
-    * Controls whether to display the top title bar and the close button
-    * @param header.isShow - Whether to display the top title bar.
-    * @param header.isNeedClose - Whether to display the close button.
-    */
-    header: {
-      isShow: true,
-      isNeedClose: true,
+    auth: {
+      type: 'token',
+      token: 'pat_sQMe9pCSGhvzrvZnDYUxHw0gSBnCyzddjbk6lvmirNrW5Et7O6hR9CEdUW7Wti0t', // 你的PAT令牌
+      onRefreshToken: async () => 'pat_sQMe9pCSGhvzrvZnDYUxHw0gSBnCyzddjbk6lvmirNrW5Et7O6hR9CEdUW7Wti0t' // 和token一致
     },
-    /**
-    * Controls whether to display the floating ball at the bottom right corner of the page.
-    */
-    asstBtn: {
-      isNeed: true
+    userInfo: {
+      id: 'user', // 保留不变，也可改成grade7_student
+      url: 'https://lf-coze-web-cdn.coze.cn/obj/eden-cn/lm-lgvj/ljhwZthlaukjlkulzlp/coze/coze-logo.png',
+      nickname: '七年级学生', // 适配教学场景，替换原来的User
     },
-    /**
-    * The ui.footer parameter is used to add the footer of the chat window.
-    * @param footer.isShow - Whether to display the bottom copy module.
-    * @param footer.expressionText - The text information displayed at the bottom.
-    * @param footer.linkvars - The link copy and link address in the footer.
-    */
-    footer: {
-      isShow: true,
-      expressionText: 'Powered by ...',
+    ui: {
+      base: {
+        icon: 'https://lf-coze-web-cdn.coze.cn/obj/eden-cn/lm-lgvj/ljhwZthlaukjlkulzlp/coze/chatsdk-logo.png',
+        layout: 'pc',
+        lang: 'zh-CN', // 关键：改成中文，避免界面英文适配问题
+        zIndex: 1000
+      },
+      header: {
+        isShow: true,
+        isNeedClose: true,
+      },
+      asstBtn: {
+        isNeed: false, // 关键：隐藏悬浮球，避免干扰
+      },
+      footer: {
+        isShow: true,
+        expressionText: '仅限本班内部学习使用 | Powered by coze，内容仅供参考', // 合规提醒
+        linkvars: {}, // 关键：补充必填的空对象，避免参数缺失报错
+      },
+      chatBot: {
+        el: undefined, // 关键：补充必填参数，指定默认容器
+        title: '七年级下册道德与法治知识点查询', // 自定义标题，替换原来的Coze Bot
+        uploadable: false, // 关键：禁用文件上传，适配教学场景
+        width: 460, // 调整宽度，显示更完整
+        isNeedAudio: false, // 禁用语音输入，避免课堂干扰
+        isNeedFunctionCallMessage: false, // 隐藏插件调用信息
+        isNeedAddNewConversation: false, // 禁用新建会话
+        isNeedQuote: true, // 保留追问功能
+      },
     },
-    /**
-    * Control the UI and basic capabilities of the chat box.
-    * @param chatBot.title - The title of the chatbox
-    * @param chatBot.uploadable - Whether file uploading is supported.
-    * @param chatBot.width - The width of the agent window on PC is measured in px, default is 460.
-    * @param chatBot.el - Container for setting the placement of the chat box (Element).
-    */
-    chatBot: {
-      title: 'Coze Bot',
-      uploadable: true,
-      width: 390,
-    },
-  },
+  });
 
-});
-
-
+  // 核心中的核心：主动显示聊天框，没有这行永远看不到！
+  cozeClient.showChatBot();
+};
